@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Books Catalogue</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 10px 18px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        #booksList {
+            margin-top: 20px;
+            max-width: 450px;
+        }
+
+        .book-item {
+            padding: 10px;
+            border: 1px solid #cccccc;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .book-item:hover {
+            background-color: #eeeeee;
+        }
+
+        #bookDetails {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #cccccc;
+            max-width: 500px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h2>
+        Books Catalogue developed by YOUR-STUDENT-ID
+    </h2>
+
+
+    <p>
+        Click the button below to get all books from the server:
+    </p>
+
+
+    <button id="getBooksButton">
+        Get all books
+    </button>
+
+
+    <div id="booksList"></div>
+
+
+    <div
+        id="bookDetails"
+        style="display: none;"
+    ></div>
+
+
+    <script>
+
+        const getBooksButton =
+            document.getElementById('getBooksButton');
+
+        const booksList =
+            document.getElementById('booksList');
+
+        const bookDetails =
+            document.getElementById('bookDetails');
+
+
+        getBooksButton.addEventListener(
+            'click',
+            async () => {
+
+                try {
+
+                    const response =
+                        await fetch('/api/books');
+
+                    const result =
+                        await response.json();
+
+                    const books =
+                        result.data;
+
+
+                    booksList.innerHTML = '';
+
+                    bookDetails.style.display =
+                        'none';
+
+
+                    books.forEach(book => {
+
+                        const bookElement =
+                            document.createElement('div');
+
+                        bookElement.className =
+                            'book-item';
+
+
+                        bookElement.textContent =
+                            `${book.title} ${book.price} AUD`;
+
+
+                        bookElement.addEventListener(
+                            'click',
+                            () => {
+                                getBookDetails(book.id);
+                            }
+                        );
+
+
+                        booksList.appendChild(
+                            bookElement
+                        );
+
+                    });
+
+
+                } catch (error) {
+
+                    console.error(
+                        'Error loading books:',
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        async function getBookDetails(id) {
+
+            try {
+
+                const response =
+                    await fetch(`/api/books/${id}`);
+
+                const result =
+                    await response.json();
+
+                const book =
+                    result.data;
+
+
+                bookDetails.innerHTML = `
+                    <p>
+                        <strong>Title:</strong>
+                        ${book.title}
+                    </p>
+
+                    <p>
+                        <strong>Author:</strong>
+                        ${book.author}
+                    </p>
+
+                    <p>
+                        <strong>Year:</strong>
+                        ${book.year}
+                    </p>
+
+                    <p>
+                        <strong>Genre:</strong>
+                        ${book.genre}
+                    </p>
+
+                    <p>
+                        <strong>Summary:</strong>
+                        ${book.summary}
+                    </p>
+
+                    <p>
+                        <strong>Price (AUD):</strong>
+                        ${book.price}
+                    </p>
+                `;
+
+
+                bookDetails.style.display =
+                    'block';
+
+
+            } catch (error) {
+
+                console.error(
+                    'Error loading book:',
+                    error
+                );
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

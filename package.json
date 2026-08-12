@@ -1,0 +1,31 @@
+{
+  "name": "task_5.2c",
+  "version": "1.0.0",
+  "description": "SIT 725 Task 5.2C MVC and Database",
+  "keywords": [
+    "MVC",
+    "MongoDB",
+    "Controllers",
+    "Services",
+    "Routes"
+  ],
+  "homepage": "https://github.com/JuharRafid/Task_5.2C#readme",
+  "bugs": {
+    "url": "https://github.com/JuharRafid/Task_5.2C/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuharRafid/Task_5.2C.git"
+  },
+  "license": "MIT",
+  "author": "JR",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.9.2"
+  }
+}
